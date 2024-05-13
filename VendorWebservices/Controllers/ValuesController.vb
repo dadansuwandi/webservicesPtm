@@ -95,8 +95,8 @@ Public Class ValuesController
 
     End Function
     <HttpGet>
-    <Route("api/getCustomerChannel/{ValueChannel}")>
-    Public Function getCustomerChannel(ByVal ValueChannel As String) As HttpResponseMessage
+    <Route("api/getCustomerChannel")>
+    Public Function getCustomerChannel(<FromBody> model As ValueChannelModel) As HttpResponseMessage
         Try
 
             Dim token As String = Request.Headers.Authorization.Parameter
@@ -117,9 +117,9 @@ Public Class ValuesController
                     command.CommandType = CommandType.StoredProcedure
 
                     ' Add parameter to the command
-                    command.Parameters.AddWithValue("@TrxID", ValueChannel)
+                    command.Parameters.AddWithValue("@TrxID", model.ValueChannel)
                     command.Parameters.AddWithValue("@TrxUserName", "")
-                    command.Parameters.AddWithValue("@TrxAction", "UIDESK165")
+                    command.Parameters.AddWithValue("@TrxAction", "UIDESK166")
 
                     connection.Open()
                     Dim reader As SqlDataReader = command.ExecuteReader()
@@ -251,6 +251,12 @@ Public Class ValuesController
     Public Class UserModel
         Public Property userName As String
         Public Property Password As String
+
+
+    End Class
+    Public Class ValueChannelModel
+        Public Property ValueChannel As String
+
 
 
     End Class
